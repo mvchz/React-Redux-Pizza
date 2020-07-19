@@ -4,7 +4,7 @@ const SortPopup = ({items}) => {
     const [visiblePopup, setVisiblePopup] = useState(false)
     const [activeItem, setActiveItem] = useState(0)
     const sortRef = React.useRef();
-    const activeLabel = items[activeItem];
+    const activeLabel = items[activeItem].name;
 
     const toggleActivePopup = () => {
         setVisiblePopup(!visiblePopup);
@@ -19,7 +19,6 @@ const SortPopup = ({items}) => {
         if(!e.path.includes(sortRef.current)){
             setVisiblePopup(false);
         }
-        console.log();
     }
 
     useEffect(() => {
@@ -53,11 +52,11 @@ const SortPopup = ({items}) => {
                     {/*<li className="active">популярности</li>*/}
                     {/*<li>цене</li>*/}
                     {/*<li>алфавиту</li>*/}
-                    {items && items.map((name, index) =>
-                        <li key={`${name}_${index}`}
+                    {items && items.map((obj, index) =>
+                        <li key={`${obj.type}_${index}`}
                             onClick={() => onSelectItem(index)}
                             className={activeItem === index ? 'active' : ''}>
-                            {name}
+                            {obj.name}
                         </li>
                     )}
                 </ul>
