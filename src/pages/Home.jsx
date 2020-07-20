@@ -1,25 +1,38 @@
 import React from 'react';
 
 import {Categories, SortPopup, PizzaBlock} from "../components";
+import {useDispatch, useSelector} from "react-redux";
+import {setCategory} from "../redux/actions/filters";
+import pizzas from "../redux/reducers/pizzas";
 
-const Home = ({items}) => {
+const categoryNames = ['Мясние', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+const sortItem = [
+    { name: 'популярности', type: 'popular'},
+    { name: 'цене', type: 'price'},
+    { name: 'алфавиту', type: 'alphabet'},
+];
+
+const Home = () => {
+    const dispatch = useDispatch();
+    const items = useSelector(({pizzas}) => pizzas.items);
+    console.log(items);
+    const onSelectCategory = React.useCallback((index) => {
+        dispatch(setCategory(index))
+    }, [])
+
     return (
         <div className="container">
             <div className="content__top">
                 <Categories
-                    onClickItem={(name) => console.log(name)}
-                    items={['Мясние', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']}
+                    onClickItem={onSelectCategory}
+                    items={categoryNames}
                 />
-                <SortPopup items={[
-                    { name: 'популярности', type: 'popular'},
-                    { name: 'цене', type: 'price'},
-                    { name: 'алфавиту', type: 'alphabet'},
-                    ]}
+                <SortPopup items={sortItem}
                 />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-                {items.map((obj) => (
+                {items && items.map((obj) => (
                     <PizzaBlock key={obj.id} {...obj}/>
                 ))}
             </div>
