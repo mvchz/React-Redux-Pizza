@@ -13,7 +13,7 @@ function App() {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        axios.get('http://localhost:3001/pizzas').then(({data}) => {
+        axios.get('http://localhost:3001/pizzas?_sort=price&_order=desc').then(({data}) => {
             dispatch(setPizzas(data));
         })
     }, [])
