@@ -1,24 +1,19 @@
 import React, {useState} from 'react';
+import PropTypes from "prop-types";
+import PizzaBlock from "./PizzaBlock";
 
-const Categories = React.memo(function Categories({items, onClickItem}) {
-
-    const [activeItem, setActiveItem] = useState(0);
-
-    const onSelectItem = (index) => {
-        setActiveItem(index);
-        onClickItem(index);
-    }
-    return (
+const Categories = React.memo(function Categories({ activeCategory, items, onClickCategory}) {
+     return (
         <div className="categories">
             <ul>
                 <li
-                    className={activeItem === null ? 'active' : ''}
-                    onClick={() => onSelectItem(null)}>Все
+                    className={activeCategory === null ? 'active' : ''}
+                    onClick={() => onClickCategory(null)}>Все
                 </li>
                 {items &&
                 items.map((name, index) => <li
-                        className={activeItem === index ? 'active' : ''}
-                        onClick={() => onSelectItem(index)}
+                        className={activeCategory === index ? 'active' : ''}
+                        onClick={() => onClickCategory(index)}
                         key={`${name}_${index}`}>{name}
                     </li>
                 )}
@@ -27,32 +22,11 @@ const Categories = React.memo(function Categories({items, onClickItem}) {
     );
 })
 
+Categories.propTypes = {
+    // activeCategory: PropTypes.oneOf([PropTypes.number, null]),
+    items: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onClickCategory: PropTypes.func
+};
 
-// class Categories extends React.Component{
-//     state = {
-//         activeItem: 2
-//     };
-//
-//     onSelectItem = index => {
-//         this.setState({activeItem: index})
-//     }
-//
-//     render() {
-//         const {items, onClickItem} = this.props;
-//         return(
-//             <div className="categories">
-//                 <ul>
-//                     <li>Все</li>
-//                     {items.map((name,index) => <li
-//                         className={this.state.activeItem === index ? 'active' : ''}
-//                         onClick={() => this.onSelectItem(index)}
-//                         key={`${name}_${index}`}>{name}</li>
-//                     )}
-//                 </ul>
-//             </div>
-//         )
-//     }
-// }
-
-
+Categories.defultProps = { activeCategory: null, items: []};
 export default Categories;

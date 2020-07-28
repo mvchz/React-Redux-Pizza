@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import ContentLoader from "react-content-loader";
 
 const PizzaBlock = ({name, imageUrl, price, types, sizes}) => {
     const availableTypes = ['тонкое','традиционное'];
@@ -78,7 +79,6 @@ PizzaBlock.propTypes = {
     price: PropTypes.number.isRequired,
     types: PropTypes.arrayOf(PropTypes.number).isRequired,
     sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
-
 };
 
 PizzaBlock.defultProps = {
